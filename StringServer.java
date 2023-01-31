@@ -2,21 +2,16 @@ import java.io.IOException;
 import java.net.URI;
 
 class Handler implements URLHandler {
-    // The one bit of state on the server: a number that will be manipulated by
-    // various requests.
-    int numStrings = 0;
-    String messages = "";
+    String messages = ""; //stores the messages requested by the User
 
     public String handleRequest(URI url) {
         if (url.getPath().equals("/")) {
-            return String.format("You've entered %d messages so far!", numStrings);
+            return messages;
         } else {
-            //System.out.println("Path: " + url.getPath());
             if (url.getPath().contains("/add-message")) {
                 String[] parameters = url.getQuery().split("=");
                 if (parameters[0].equals("s")) {
                     messages += "\n" + parameters[1];
-                    numStrings+=1;
                     return messages;
                 }
             }
